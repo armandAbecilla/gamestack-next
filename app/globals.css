@@ -1,26 +1,133 @@
-@import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap'); */
+@import 'tailwindcss';
+@import 'react-loading-skeleton/dist/skeleton.css';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --font-body: 'Work Sans', sans-serif;
+  --font-heading: 'Rajdhani', sans-serif;
+  --color-darkgreen: #348486;
+  --color-darkgreen-100: #2b7d78;
+  --color-palegreen: #addacc;
+  --color-offwhite: #f8f1ca;
+  --color-black-200: #1f1a09;
+  --color-black-100: #1d1a16;
+  --color-black-50: #312c1d;
+  --color-black-25: #46443c;
+  --color-error: #6d0b0b;
+  --color-body: '#ccdbf1';
+  --color-playing: #fbf2c4;
+  --color-backlog: #c7522a;
+  --color-wishlist: #e5c185;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background: #1d1a16; */
+  color: #d9e2f1;
+  min-height: 100vh;
+  /* background: rgba(255, 255, 255, 0.9) url('/bg.png') no-repeat center / cover; */
+  /* background: linear-gradient(135deg, #16181c, #1a1a1a, #2c2c2c); */
+  background: #1b1b1b;
+  /* background-size: 400% 400%;
+  animation: backgroundShift 10s ease infinite; */
+}
+
+/* body:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  z-index: -1;
+} */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05) !important; /* frosted look */
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px) !important; /* <--- frosted effect */
+  width: 80%;
+  max-width: 60rem;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: fade-slide-up 0.3s ease-out forwards;
+  overflow: hidden; /* keep it clean */
+}
+
+.modal .modal-inner {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* Chrome, Edge, Safari */
+.modal .modal-inner::-webkit-scrollbar {
+  width: 8px;
+}
+.modal .modal-inner::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+.modal .modal-inner::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* For elements that fetched via API || dynamic content */
+.view-game-modal-description p:not(:first-child) {
+  margin-top: 0.8rem;
+}
+
+.view-game-modal-description h3 {
+  margin-top: 2rem;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-yellow-500);
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.glass-black {
+  background: rgba(255, 255, 255, 0.05) !important; /* frosted look */
+  backdrop-filter: blur(16px) !important; /* <--- frosted effect */
 }

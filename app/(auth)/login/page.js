@@ -1,24 +1,18 @@
-import HomeMainContent from '@/components/HomeMainContent';
-import Search from '@/components/Search';
+import LoginForm from '@/components/auth/LoginForm';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
-export default async function Home() {
+export default async function Login() {
   // get the session from the createSupabaseServerClient server instance
   const supabase = createSupabaseServerClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  // if no session then redirect to homepage
-  if (!session) {
-    redirect('/login');
+  // if there is a session then redirect to homepage
+  if (session) {
+    redirect('/');
   }
 
-  return (
-    <>
-      <Search />
-      <HomeMainContent />
-    </>
-  );
+  return <LoginForm />;
 }
