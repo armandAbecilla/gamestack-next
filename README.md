@@ -1,71 +1,36 @@
-# 🎮 GameStack
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-> 🗂️ A personal gaming backlog tracker to help keep your ever-growing library in check.
+## Getting Started
 
----
+First, run the development server:
 
-## 📖 Description
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-GameStack is a full-stack application I built to manage and track my personal gaming backlog — because let's face it, between **Steam**, **Xbox**, **PlayStation**, and **Nintendo**, the game pile is only getting taller.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-What started as a simple **React** app has now evolved into a sleek **Next.js** application with modern tools and services under the hood.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
----
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## ⚙️ Tech Stack
+## Learn More
 
-### 🖥️ Frontend
+To learn more about Next.js, take a look at the following resources:
 
-- ⚛️ [**Next.js**](https://nextjs.org/) – SSR & file-based routing
-- 🎨 [**Tailwind CSS**](https://tailwindcss.com/) – Utility-first styling
-- 🔄 [**TanStack Query (React Query)**](https://tanstack.com/query/latest) – Data fetching & caching
-- 🧠 [**Redux Toolkit**](https://redux-toolkit.js.org/) – State management _(might switch to Context API)_
-- 🌐 [**Axios**](https://axios-http.com/) – For smooth HTTP requests
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### 🔐 Authentication
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-- 🧾 [**Supabase Auth**](https://supabase.com/auth) – Secure auth with **HTTP-only cookies**
+## Deploy on Vercel
 
-### 🧰 Backend
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-- 🌍 [**Node.js + Express**](https://expressjs.com/) – REST API
-- 🐘 [**Supabase Postgres DB**](https://supabase.com/database) – Relational data made easy
-
----
-
-## 🌐 Third-Party Integrations
-
-- 🎮 [**RAWG.io API**](https://rawg.io/apidocs) – Game database & metadata
-- ☁️ [**Cloudinary**](https://cloudinary.com/) – Image storage & optimization
-- 📦 [**Supabase**](https://supabase.com/) – Auth + DB + Storage
-- 🔗 [**Axios**](https://axios-http.com/) – Promise-based HTTP client
-
----
-
-## 🚀 Features
-
-- 📋 Track games across multiple platforms
-- 🔍 Search & explore new titles from RAWG API
-- ✅ Mark games as "Backlog", "Playing", "Completed", etc.
-- 🧾 Authenticated with Supabase (http-only cookies)
-- 📸 Upload and manage cover art with Cloudinary
-- 🧠 Persistent state with Redux (for now)
-
----
-
-> 📝 Don’t forget to add your `.env` files for Supabase, RAWG API keys, Cloudinary credentials, etc.
-
----
-
-## 🙌 Acknowledgements
-
-- [RAWG.io](https://rawg.io/) – Free game API
-- [Supabase](https://supabase.com/) – Auth & DB
-- [Cloudinary](https://cloudinary.com/) – Media management
-
----
-
-## 🧑‍💻 Author
-
-**@armandAbecilla**  
-Built for fun, backlog control, and sanity 🌈
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

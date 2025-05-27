@@ -79,11 +79,11 @@ export default function GameDetailClient({ gameId }) {
   });
   const mutateRemoveFromLibrary = useOptimisticUpdating(
     userGameKey,
-    removeGameFromList
+    removeGameFromList,
   );
   const mutateUpdateUserGameData = useOptimisticUpdating(
     userGameKey,
-    updateUserGameData
+    updateUserGameData,
   );
 
   async function handleAddToLibrary() {
