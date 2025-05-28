@@ -1,6 +1,6 @@
 import projectConfig from '@/config/config';
 import { GameListFilters } from '@/models/types';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 export const MAX_PAGE_SIZE = 25;
 
@@ -63,13 +63,18 @@ export const fetchGameByKeyword = async ({
 export const fetchGameDetails = async ({
   signal,
   gameId,
+  readOnly,
 }: {
   signal?: AbortSignal;
   gameId: string;
+  readOnly?: boolean;
 }) => {
-  const result = await axios.get(`${projectConfig.API_URL}/rawg/${gameId}`, {
-    signal: signal,
-  });
+  const result = await axios.get(
+    `${projectConfig.API_URL}/rawg/${gameId}${readOnly ? '?readOnly=true' : ''}`,
+    {
+      signal: signal,
+    },
+  );
   return result.data;
 };
 

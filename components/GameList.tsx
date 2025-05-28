@@ -54,6 +54,11 @@ const GameList = ({ filters }: GameListProps) => {
     enabled: !!userId,
   });
 
+  if (isError) {
+    console.log(error);
+    console.log(data);
+  }
+
   // pagination functions
   function handleOnSetPage(page: number) {
     setPage(page);

@@ -61,7 +61,7 @@ export default function GameDetailClient({ gameId }) {
 
   const { data: userGameData } = useQuery({
     queryKey: userGameKey,
-    queryFn: ({ signal, queryKey }) => {
+    queryFn: ({ signal }) => {
       return fetchUserGameDetail({
         signal,
         userId: auth.user.id,
