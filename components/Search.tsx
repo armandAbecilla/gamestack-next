@@ -104,13 +104,23 @@ const Search = (): JSX.Element => {
       {searchResult?.map((game: any) => (
         <li key={game.id} className='border-stone-600 p-1 not-first:border-t'>
           <Link href={`/game/${game.id}`} className='flex items-center gap-5'>
-            <Image
-              src={game.background_image}
-              alt={game.name}
-              className='aspect-square h-15 w-auto object-cover'
-              height={60}
-              width={60}
-            />
+            {game.background_image ? (
+              <Image
+                src={game.background_image}
+                alt={game.name}
+                className='aspect-square h-15 w-auto object-cover'
+                height={60}
+                width={60}
+              />
+            ) : (
+              <Image
+                src='https://placehold.co/400?text=No+image'
+                alt={game.name}
+                className='aspect-square h-15 w-auto object-cover'
+                height={60}
+                width={60}
+              />
+            )}
             <h4 className='text-xl'>{game.name}</h4>
           </Link>
         </li>
