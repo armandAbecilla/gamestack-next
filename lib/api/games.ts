@@ -97,7 +97,11 @@ export const fetchUserGameDetail = async ({
 };
 
 type NewGameData = {
-  string: any;
+  userId: string;
+  rawgGameId: string;
+  rawgGameTitle: string;
+  status: string;
+  notes: string;
 };
 
 export const addGameToList = async ({

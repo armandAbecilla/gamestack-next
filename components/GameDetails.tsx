@@ -14,7 +14,7 @@ type GameDetailsProps = {
   onAddToLibrary: () => void;
   onRemoveFromLibrary: () => void;
   userGameData: UserGameData;
-  onStatusChange: () => void;
+  onStatusChange: (status: string | number) => void;
   onEditNote: () => void;
 };
 

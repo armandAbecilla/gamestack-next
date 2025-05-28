@@ -1,6 +1,11 @@
 'use client';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  QueryKey,
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -16,40 +21,58 @@ import {
   updateUserGameData,
 } from '@/lib/api/games';
 import queryClient from '@/lib/api/index';
+import { RootState } from '@/lib/store/store';
 
-const useOptimisticUpdating = (queryKey, mutationFn, options = {}) => {
-  return useMutation({
-    mutationFn: mutationFn,
-    onMutate: async (newData) => {
-      await queryClient.cancelQueries({
-        queryKey: queryKey,
-      });
+type UseOptimisticUpdatingOptions<
+  TData,
+  TError,
+  TVariables,
+  TContext extends { prevData?: TData },
+> = UseMutationOptions<TData, TError, TVariables, TContext>;
 
-      const prevData = queryClient.getQueryData(queryKey);
-      // set data
-      queryClient.setQueryData(queryKey, newData);
+const useOptimisticUpdating = <
+  TData = unknown,
+  TError = unknown,
+  TVariables = unknown,
+  TContext extends { prevData?: TData } = { prevData?: TData },
+>(
+  queryKey: QueryKey,
+  mutationFn: (variables: TVariables) => Promise<TData>,
+  options: UseOptimisticUpdatingOptions<
+    TData,
+    TError,
+    TVariables,
+    TContext
+  > = {},
+) => {
+  return useMutation<TData, TError, TVariables, TContext>({
+    mutationFn,
+    onMutate: async (newData: TVariables) => {
+      await queryClient.cancelQueries({ queryKey });
 
-      return {
-        prevData: prevData,
-      };
+      const prevData = queryClient.getQueryData<TData>(queryKey);
+
+      queryClient.setQueryData<TData>(queryKey, newData as unknown as TData);
+
+      return { prevData } as TContext;
     },
-    onError: (error, data, context) => {
-      // revert to previous data if an error occurs
-      queryClient.setQueryData(queryKey, context.prevData);
+    onError: (error, variables, context) => {
+      if (context?.prevData !== undefined) {
+        queryClient.setQueryData(queryKey, context.prevData);
+      }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: queryKey,
-      });
+      queryClient.invalidateQueries({ queryKey });
     },
     ...options,
   });
 };
 
-export default function GameDetailClient({ gameId }) {
-  const auth = useSelector((state) => state.auth);
+export default function GameDetailClient({ gameId }: { gameId: string }) {
+  const auth = useSelector((state: RootState) => state.auth);
+  const userId = auth.user?.id;
 
-  const userGameKey = ['userGame', gameId, auth.user?.id]; // keys for queryKey
+  const userGameKey = ['userGame', gameId, userId]; // keys for queryKey
   const [notesModalOpen, setNotesModalOpen] = useState(false);
 
   // game information
@@ -65,10 +88,11 @@ export default function GameDetailClient({ gameId }) {
     queryFn: ({ signal }) => {
       return fetchUserGameDetail({
         signal,
-        userId: auth.user.id,
+        userId: userId ? userId : '',
         gameId: gameId,
       });
     },
+    enabled: !!userId,
   });
 
   const mutateAddToLibrary = useOptimisticUpdating(userGameKey, addGameToList, {
@@ -91,7 +115,7 @@ export default function GameDetailClient({ gameId }) {
     if (!userGameData) {
       mutateAddToLibrary.mutate({
         data: {
-          userId: auth.user.id,
+          userId: userId ? userId : '',
           rawgGameId: gameId,
           rawgGameTitle: gameData.name,
           status: '',
@@ -108,7 +132,7 @@ export default function GameDetailClient({ gameId }) {
     }
   }
 
-  async function handleStatusChange(status) {
+  async function handleStatusChange(status: string | number) {
     mutateUpdateUserGameData.mutate({
       id: userGameData.id,
       gameData: {
@@ -118,7 +142,7 @@ export default function GameDetailClient({ gameId }) {
     });
   }
 
-  function handleUpdateNote(updatedNote) {
+  function handleUpdateNote(updatedNote: string) {
     mutateUpdateUserGameData.mutate({
       id: userGameData.id,
       gameData: {
@@ -155,7 +179,7 @@ export default function GameDetailClient({ gameId }) {
       <EditNotesModal
         gameTitle={gameData?.name}
         open={notesModalOpen}
-        userGameData={userGameData}
+        userNote={userGameData?.notes}
         onClose={handleCloseModal}
         onUpdateNote={handleUpdateNote}
         isUpdating={mutateUpdateUserGameData.isPending}
