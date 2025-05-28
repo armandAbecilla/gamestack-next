@@ -1,11 +1,11 @@
 import HomeMainContent from '@/components/HomeMainContent';
 import Search from '@/components/Search';
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 const Home = async () => {
   // get the session from the createSupabaseServerClient server instance
-  const supabase = createSupabaseServerClient();
+  const supabase = await createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();

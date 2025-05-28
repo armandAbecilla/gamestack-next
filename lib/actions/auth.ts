@@ -1,5 +1,5 @@
 'use client';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { redirect } from 'next/navigation';
 import projectConfig from '@/config/config';
 import axios, { isAxiosError } from 'axios';
@@ -10,6 +10,7 @@ export async function login(
 ): Promise<{ errors: string | null }> {
   console.log(formData.get('email'));
   console.log(formData.get('password'));
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
     email: formData.get('email') as string,

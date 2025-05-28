@@ -1,6 +1,10 @@
-'use client';
+// ONLY USE IF ACTION WILL NOT CONTAIN SESSIONS
+// EX: Login / Logout
 
-// import { createBrowserClient } from '@supabase/ssr';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-
-export const supabase = createClientComponentClient();
+import { createBrowserClient } from '@supabase/ssr';
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+}

@@ -89,7 +89,7 @@ const FancySelect = ({
   useLayoutEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      const scrollY = window.scrollY;
+      // const scrollY = window.scrollY;
       const scrollX = window.scrollX;
 
       setDropdownStyle({
@@ -107,10 +107,10 @@ const FancySelect = ({
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleClickOutside = (e: any) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
-        !triggerRef.current?.contains(e.target) &&
-        !dropdownContainerRef.current?.contains(e.target)
+        !triggerRef.current?.contains(e.target as Node) &&
+        !dropdownContainerRef.current?.contains(e.target as Node)
       ) {
         setIsOpen(false);
       }
@@ -124,7 +124,7 @@ const FancySelect = ({
   useEffect(() => {
     if (!isOpen || !triggerRef.current) return;
 
-    let prevRect = triggerRef.current.getBoundingClientRect();
+    const prevRect = triggerRef.current.getBoundingClientRect();
 
     const checkPositionChange = () => {
       if (triggerRef.current) {

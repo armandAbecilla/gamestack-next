@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { fetchGameDetails } from '@/lib/api/games';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
 export async function generateMetadata({
@@ -30,8 +30,7 @@ export default async function GameDetailPage({
 }: {
   params: Promise<{ gameId: string }>;
 }) {
-  // get the session from the createSupabaseServerClient server instance
-  const supabase = createSupabaseServerClient();
+  const supabase = await createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();

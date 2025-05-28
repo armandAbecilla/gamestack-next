@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import { useDispatch } from 'react-redux';
 import { authActions } from '@/lib/store/auth/auth';
 
@@ -9,22 +9,35 @@ const AuthListener = (): null => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Fetch current user on load
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user !== null) {
-        dispatch(authActions.setUser(data.user));
+    const init = async () => {
+      const supabase = await createClient();
+
+      // Fetch current user on load
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        dispatch(authActions.setUser(user));
       }
-    });
 
-    // Listen to auth state changes
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        dispatch(authActions.setUser(session?.user ?? null));
-      },
-    );
+      // Listen to auth state changes
+      const { data: listener } = supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          dispatch(authActions.setUser(session?.user ?? null));
+        },
+      );
 
+      // Cleanup
+      return () => {
+        listener.subscription.unsubscribe();
+      };
+    };
+
+    const cleanupPromise = init();
+
+    // Optional: cleanup from async effect
     return () => {
-      listener.subscription.unsubscribe();
+      cleanupPromise.then((cleanup) => cleanup && cleanup());
     };
   }, [dispatch]);
 
