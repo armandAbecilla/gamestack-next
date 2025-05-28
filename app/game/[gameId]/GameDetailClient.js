@@ -1,13 +1,13 @@
 'use client';
 
-import GameDetails from '@/components/GameDetails';
-import EditNotesModal from '@/components/EditNotesModal';
-import Button from '@/components/UI/Button';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
-import queryClient from '@/lib/api/index';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import EditNotesModal from '@/components/EditNotesModal';
+import GameDetails from '@/components/GameDetails';
+import Button from '@/components/UI/Button';
 import {
   fetchGameDetails,
   fetchUserGameDetail,
@@ -15,6 +15,7 @@ import {
   removeGameFromList,
   updateUserGameData,
 } from '@/lib/api/games';
+import queryClient from '@/lib/api/index';
 
 const useOptimisticUpdating = (queryKey, mutationFn, options = {}) => {
   return useMutation({

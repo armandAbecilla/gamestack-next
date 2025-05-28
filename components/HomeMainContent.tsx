@@ -1,9 +1,11 @@
 'use client';
-import Sidebar from './Sidebar';
-import GameList from './GameList';
 import { JSX, useState } from 'react';
-import useDebounce from '@/utils/hooks/useDebounce';
+
 import { GameListFilters } from '@/models/types';
+import useDebounce from '@/utils/hooks/useDebounce';
+
+import GameList from './GameList';
+import Sidebar from './Sidebar';
 
 const HomeMainContent = (): JSX.Element => {
   const [filters, setFilters] = useState<GameListFilters>({});

@@ -1,7 +1,9 @@
 'use client';
-import Button from './UI/Button';
 import { redirect } from 'next/navigation';
+
 import { createClient } from '@/lib/supabase/client';
+
+import Button from './UI/Button';
 
 const LogoutButton = () => {
   const handleLogout = async (): Promise<void> => {

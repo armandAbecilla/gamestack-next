@@ -1,10 +1,12 @@
 'use client';
-import Link from 'next/link';
-import LogoutButton from './LogoutButton';
 import Image from 'next/image';
-import logoImage from '@/assets/gamestack-logo.png';
+import Link from 'next/link';
 import { useSelector } from 'react-redux';
+
+import logoImage from '@/assets/gamestack-logo.png';
 import { RootState } from '@/lib/store/store';
+
+import LogoutButton from './LogoutButton';
 
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.auth);

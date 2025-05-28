@@ -1,5 +1,6 @@
-import { SelectOption } from '@/models/types';
 import { DetailedHTMLProps, JSX, SelectHTMLAttributes } from 'react';
+
+import { SelectOption } from '@/models/types';
 
 type SelectProps = {
   id: string;

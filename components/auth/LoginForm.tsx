@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import useInput from '@/utils/hooks/useInput';
+import { useActionState } from 'react';
+
 import Button from '@/components/UI/Button';
 import Input from '@/components/UI/Input';
-import { isEmailValid, isNotEmpty } from '@/utils/validations/validations';
-
-import { useActionState } from 'react';
 import { login } from '@/lib/actions/auth';
+import useInput from '@/utils/hooks/useInput';
+import { isEmailValid, isNotEmpty } from '@/utils/validations/validations';
 
 export default function LoginForm() {
   const emailInput = useInput('', isEmailValid);

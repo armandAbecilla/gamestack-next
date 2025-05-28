@@ -1,6 +1,7 @@
+import { redirect } from 'next/navigation';
+
 import SignupForm from '@/components/auth/SignupForm';
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
 
 const Signup = async () => {
   const supabase = await createClient();

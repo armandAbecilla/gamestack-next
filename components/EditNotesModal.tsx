@@ -1,11 +1,11 @@
 'use client';
-// components
-import Modal from './UI/Modal';
-import Input from './UI/Input';
-import Button from './UI/Button';
-
 // react hooks
 import { useEffect, useRef } from 'react';
+
+// components
+import Button from './UI/Button';
+import Input from './UI/Input';
+import Modal from './UI/Modal';
 
 type EditNotesModalProps = {
   gameTitle: string;

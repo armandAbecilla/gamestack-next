@@ -17,7 +17,7 @@ export default function ShuffleCounter({
       const max = target + currentRange;
       return Math.floor(min + Math.random() * (max - min));
     },
-    [count]
+    [count],
   );
 
   useEffect(() => {

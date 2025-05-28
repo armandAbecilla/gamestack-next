@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
 import { useDispatch } from 'react-redux';
+
 import { authActions } from '@/lib/store/auth/auth';
+import { createClient } from '@/lib/supabase/client';
 
 const AuthListener = (): null => {
   const dispatch = useDispatch();

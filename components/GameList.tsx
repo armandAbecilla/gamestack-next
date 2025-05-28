@@ -1,19 +1,20 @@
 'use client';
 // components
-import GameCard from './GameCard';
-import Pagination from './UI/Pagination';
-import GamesListSkeleton from './skeleton-loaders/GamesList';
 
 // react hooks
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
-import querySelector from '@/lib/api/index';
-import { fetchUserGames, MAX_PAGE_SIZE } from '@/lib/api/games';
 
+import { fetchUserGames, MAX_PAGE_SIZE } from '@/lib/api/games';
+import querySelector from '@/lib/api/index';
+import { RootState } from '@/lib/store/store';
 import { GameListItem } from '@/models/interfaces';
 import { GameDataResponse } from '@/models/types';
-import { RootState } from '@/lib/store/store';
+
+import GameCard from './GameCard';
+import GamesListSkeleton from './skeleton-loaders/GamesList';
+import Pagination from './UI/Pagination';
 
 type GameListProps = {
   filters?: { title?: string; status?: string };

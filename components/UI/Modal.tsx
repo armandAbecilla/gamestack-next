@@ -1,7 +1,7 @@
 'use client';
 
-import { createPortal } from 'react-dom';
 import { JSX, ReactNode, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 type ModalProps = {
   children: ReactNode;

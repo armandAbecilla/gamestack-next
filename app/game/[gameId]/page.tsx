@@ -1,11 +1,11 @@
-import queryClient from '@/lib/api';
-import GameDetailClient from './GameDetailClient';
-import { notFound } from 'next/navigation';
-import { fetchGameDetails } from '@/lib/api/games';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { notFound, redirect } from 'next/navigation';
 
+import queryClient from '@/lib/api';
+import { fetchGameDetails } from '@/lib/api/games';
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
+
+import GameDetailClient from './GameDetailClient';
 
 export async function generateMetadata({
   params,

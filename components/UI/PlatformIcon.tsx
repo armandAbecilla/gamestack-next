@@ -1,7 +1,7 @@
-import xboxLogo from '@/assets/icon-xbox-100.png';
-import psLogo from '@/assets/icon-playstation-100.png';
-import pcLogo from '@/assets/icon-pc-100.png';
 import nswLogo from '@/assets/icon-nintendo-switch-100.png';
+import pcLogo from '@/assets/icon-pc-100.png';
+import psLogo from '@/assets/icon-playstation-100.png';
+import xboxLogo from '@/assets/icon-xbox-100.png';
 
 type PlatformIcon = {
   platform?: 'pc' | 'xbox' | 'playstation' | 'nintendo switch';

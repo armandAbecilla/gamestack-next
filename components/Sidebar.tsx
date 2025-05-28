@@ -2,12 +2,12 @@
 
 // import Button from './UI/Button';
 // import Checkbox from './UI/Checkbox';
+import { useEffect, useState } from 'react';
+
 import Accordion from '@/components/UI/Accordion';
 import Radio from '@/components/UI/Radio';
-
 import { statusOptions } from '@/data/dropdowns';
 import { GameListFilters } from '@/models/types';
-import { useEffect, useState } from 'react';
 
 type SidebarProps = {
   onFilterChange: (filters: GameListFilters) => void;

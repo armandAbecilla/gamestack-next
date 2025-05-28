@@ -25,4 +25,4 @@ export interface GameListItem {
   background_image: string;
 }
 
-export interface SearchResultItem {}
+// export interface SearchResultItem {}

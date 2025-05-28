@@ -1,8 +1,12 @@
 import { Rajdhani, Work_Sans } from 'next/font/google';
+
 import AuthListener from '@/components/AuthListener';
+
 import './globals.css';
-import Provider from './Providers';
 import Header from '@/components/Header';
+
+import Provider from './Providers';
+
 import { ReactNode } from 'react';
 
 const rajdhani = Rajdhani({

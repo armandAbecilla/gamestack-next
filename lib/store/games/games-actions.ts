@@ -1,7 +1,7 @@
-import projectConfig from '@/config/config'; // environment variable
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import projectConfig from '@/config/config'; // environment variable
 import { UserGameData } from '@/models/interfaces';
 
 const MAX_PAGE_SIZE = 25;

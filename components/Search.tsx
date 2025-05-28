@@ -1,19 +1,15 @@
 'use client';
 
-import SearchInput from './UI/SearchInput';
+import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState, useEffect, useRef, JSX, ChangeEvent } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-// react hooks
-import { useState, useEffect, useRef, JSX, ChangeEvent } from 'react';
-
-// custom hooks
-import useDebounce from '@/utils/hooks/useDebounce';
-import { useQuery } from '@tanstack/react-query';
-
 import { fetchGameByKeyword } from '@/lib/api/games';
+import useDebounce from '@/utils/hooks/useDebounce';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import SearchInput from './UI/SearchInput';
 
 const Search = (): JSX.Element => {
   const [search, setSearch] = useState<string>('');
@@ -21,12 +17,7 @@ const Search = (): JSX.Element => {
   const debouncedSearchTerm = useDebounce(search, 1000);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  const {
-    data: searchResult,
-    isPending: isSearching,
-    isError,
-    error,
-  } = useQuery({
+  const { data: searchResult, isPending: isSearching } = useQuery({
     queryKey: ['games', debouncedSearchTerm],
     queryFn: ({ signal }) =>
       fetchGameByKeyword({ signal, searchTerm: debouncedSearchTerm }),

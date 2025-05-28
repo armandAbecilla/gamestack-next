@@ -1,8 +1,9 @@
 'use client';
-import { createClient } from '@/lib/supabase/client';
-import { redirect } from 'next/navigation';
-import projectConfig from '@/config/config';
 import axios, { isAxiosError } from 'axios';
+import { redirect } from 'next/navigation';
+
+import projectConfig from '@/config/config';
+import { createClient } from '@/lib/supabase/client';
 
 export async function login(
   prevState: unknown,

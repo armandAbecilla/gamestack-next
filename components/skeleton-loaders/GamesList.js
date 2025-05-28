@@ -1,4 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
+
 export default function GamesListSkeleton() {
   return (
     <div className='grid grid-cols-2 gap-4 xl:grid-cols-4'>

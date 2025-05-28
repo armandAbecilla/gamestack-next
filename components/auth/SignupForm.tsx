@@ -1,12 +1,13 @@
 'use client';
 
-import Input from '@/components/UI/Input';
-import Button from '@/components/UI/Button';
-import useInput from '@/utils/hooks/useInput';
 import Link from 'next/link';
-import { isEmailValid, isNotEmpty } from '@/utils/validations/validations';
 import { useActionState } from 'react';
+
+import Button from '@/components/UI/Button';
+import Input from '@/components/UI/Input';
 import { signUp } from '@/lib/actions/auth';
+import useInput from '@/utils/hooks/useInput';
+import { isEmailValid, isNotEmpty } from '@/utils/validations/validations';
 
 export default function SignupForm() {
   const emailInput = useInput('', isEmailValid);

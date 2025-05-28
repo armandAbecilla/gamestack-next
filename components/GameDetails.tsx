@@ -1,11 +1,12 @@
-import GameDetailsSkeleton from './skeleton-loaders/GameDetails';
+import Image from 'next/image';
+import { JSX } from 'react';
+
 import Button from '@/components/UI/Button';
 import FancySelect from '@/components/UI/FancySelect';
-
 import { statusOptions } from '@/data/dropdowns';
-import { JSX } from 'react';
 import { GameData, UserGameData } from '@/models/interfaces';
-import Image from 'next/image';
+
+import GameDetailsSkeleton from './skeleton-loaders/GameDetails';
 
 type GameDetailsProps = {
   gameData: GameData;

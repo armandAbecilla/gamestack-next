@@ -1,7 +1,8 @@
+import { redirect } from 'next/navigation';
+
 import HomeMainContent from '@/components/HomeMainContent';
 import Search from '@/components/Search';
 import { createClient } from '@/lib/supabase/server';
-import { redirect } from 'next/navigation';
 
 const Home = async () => {
   const supabase = await createClient();

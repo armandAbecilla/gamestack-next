@@ -1,6 +1,7 @@
+import axios from 'axios';
+
 import projectConfig from '@/config/config';
 import { GameListFilters } from '@/models/types';
-import axios from 'axios';
 
 export const MAX_PAGE_SIZE = 25;
 

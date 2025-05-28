@@ -1,8 +1,9 @@
 'use client';
-import CaretUp from '@/components/Icons/CaretUp';
-import CaretDown from '@/components/Icons/CaretDown';
 import { motion, AnimatePresence } from 'framer-motion';
 import { JSX, ReactNode, useState } from 'react';
+
+import CaretDown from '@/components/Icons/CaretDown';
+import CaretUp from '@/components/Icons/CaretUp';
 
 type AccordionProps = {
   label: string;
