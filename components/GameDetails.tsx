@@ -5,6 +5,7 @@ import FancySelect from '@/components/UI/FancySelect';
 import { statusOptions } from '@/data/dropdowns';
 import { JSX } from 'react';
 import { GameData, UserGameData } from '@/models/interfaces';
+import Image from 'next/image';
 
 type GameDetailsProps = {
   gameData: GameData;
@@ -30,7 +31,7 @@ const GameDetails = ({
     return <GameDetailsSkeleton />;
   }
 
-  const platforms = gameData.platforms.map((item, index) => (
+  const platforms = gameData?.platforms.map((item, index) => (
     <span key={item.platform.id}>
       {item.platform.name}
       {index !== gameData.platforms.length - 1 ? ', ' : ''}
@@ -68,10 +69,19 @@ const GameDetails = ({
       {gameData && !isLoading && (
         <div className='pb-20'>
           <div className='flex flex-col gap-5 xl:flex-row'>
-            <img
+            <div className='relative h-[350px] w-full md:max-w-[600px]'>
+              <Image
+                src={gameData.background_image}
+                alt='image preview'
+                fill
+                className='object-contain'
+              />
+            </div>
+            {/* <img
               className='aspect-auto max-w-[500px] object-cover xl:h-[700px]'
               src={gameData.background_image}
-            />
+            /> */}
+
             <div className='flex flex-col gap-4'>
               <h1 className='font-heading text-3xl xl:text-5xl'>
                 {gameData.name}

@@ -13,7 +13,7 @@ export async function generateMetadata({
   params: Promise<{ gameId: string }>;
 }) {
   const { gameId } = await params;
-  const gameData = await fetchGameDetails({ gameId: gameId });
+  const gameData = await fetchGameDetails({ gameId: gameId, readOnly: true });
 
   if (!gameData) {
     notFound();
