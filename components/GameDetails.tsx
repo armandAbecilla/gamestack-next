@@ -69,13 +69,16 @@ const GameDetails = ({
     <>
       {gameData && !isLoading && (
         <div className='pb-20'>
-          <div className='flex flex-col gap-5 xl:flex-row'>
-            <div className='relative h-[350px] w-full md:max-w-[600px]'>
+          <h1 className='font-heading mb-5 text-3xl xl:text-5xl'>
+            {gameData.name}
+          </h1>
+          <div className='flex flex-col gap-8 xl:flex-row'>
+            <div className='relative h-[200px] w-full rounded-sm border border-stone-700 md:h-[350px] md:max-w-1/2'>
               <Image
                 src={gameData.background_image}
                 alt='image preview'
                 fill
-                className='object-contain'
+                className='object-cover'
               />
             </div>
             {/* <img
@@ -84,27 +87,17 @@ const GameDetails = ({
             /> */}
 
             <div className='flex flex-col gap-4'>
-              <h1 className='font-heading text-3xl xl:text-5xl'>
-                {gameData.name}
-              </h1>
               <h4 className='text-stone-100'>
                 Release date: {gameData.released}
               </h4>
-              <div className='flex gap-2'>
-                <h4 className='text-stone-100'>Available on:</h4>
+              <div className='flex gap-3'>
+                <h4 className='text-nowrap text-stone-100'>Available on:</h4>
                 <p>{platforms}</p>
               </div>
               <span className='text-stone-100'>
                 Metacritic Score: {gameData.metacritic || 'Not yet available'}
               </span>
               <span className='text-stone-100'>Developed by: {developers}</span>
-              <h4 className='font-h mt-5 text-xl'>Description:</h4>
-              <div
-                className='flex flex-col gap-2 text-stone-300'
-                dangerouslySetInnerHTML={{
-                  __html: gameData.description,
-                }}
-              ></div>
 
               {onUserList && (
                 <FancySelect
@@ -139,8 +132,18 @@ const GameDetails = ({
             </div>
           </div>
 
+          <div className='flex flex-col gap-5'>
+            <h4 className='font-heading mt-5 text-2xl'>Description:</h4>
+            <div
+              className='flex flex-col gap-2 text-stone-300'
+              dangerouslySetInnerHTML={{
+                __html: gameData.description,
+              }}
+            ></div>
+          </div>
+
           {userGameData && (
-            <div className='mt-4 pt-4'>
+            <div className='mt-10 border-t border-stone-700 pt-10'>
               <h4 className='font-heading text-xl text-stone-200'>
                 User notes:
               </h4>
@@ -149,7 +152,7 @@ const GameDetails = ({
             </div>
           )}
 
-          <div className='mt-4 border-t border-stone-700 pt-4'>
+          <div className='mt-10 border-t border-stone-700 pt-4'>
             <h4 className='font-heading text-xl text-stone-200'>
               PC System Requirements
             </h4>
