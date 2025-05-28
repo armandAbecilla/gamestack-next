@@ -32,12 +32,11 @@ export default async function GameDetailPage({
 }) {
   const supabase = await createClient();
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
   const { gameId } = await params;
 
-  // if no session then redirect to homepage
-  if (!session) {
+  if (!user) {
     redirect('/login');
   }
 
