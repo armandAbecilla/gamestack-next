@@ -1,13 +1,11 @@
 import { Rajdhani, Work_Sans } from 'next/font/google';
+import { ReactNode } from 'react';
 
 import AuthListener from '@/components/AuthListener';
-
 import './globals.css';
 import Header from '@/components/Header';
 
 import Provider from './Providers';
-
-import { ReactNode } from 'react';
 
 const rajdhani = Rajdhani({
   subsets: ['latin'],
@@ -30,10 +28,11 @@ export const metadata = {
 type RootLayoutProps = {
   children: ReactNode;
 };
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en'>
-      <body>
+      <body className={`${rajdhani.className} ${worksans.className}`}>
         <div id='modal'></div>
         <Provider>
           <AuthListener />
