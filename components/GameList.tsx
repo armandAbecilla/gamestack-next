@@ -10,14 +10,14 @@ import { fetchUserGames, MAX_PAGE_SIZE } from '@/lib/api/games';
 import querySelector from '@/lib/api/index';
 import { RootState } from '@/lib/store/store';
 import { GameListItem } from '@/models/interfaces';
-import { GameDataResponse } from '@/models/types';
+import { GameDataResponse, Status, TimeUnit } from '@/models/types';
 
 import GameCard from './GameCard';
 import GamesListSkeleton from './skeleton-loaders/GamesList';
 import Pagination from './UI/Pagination';
 
 type GameListProps = {
-  filters?: { title?: string; status?: string };
+  filters?: { title?: string; status?: Status; timeUnit?: TimeUnit };
 };
 
 const GameList = ({ filters }: GameListProps) => {
@@ -27,7 +27,7 @@ const GameList = ({ filters }: GameListProps) => {
   // Pagination state
   const [page, setPage] = useState<number>(1);
   const gamesQueryKey =
-    filters?.status || filters?.title
+    filters?.status || filters?.title || filters?.timeUnit
       ? ['games', page, filters]
       : ['games', page];
 

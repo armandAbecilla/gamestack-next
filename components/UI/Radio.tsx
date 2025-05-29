@@ -10,10 +10,9 @@ const Radio = ({ label, id, ...props }: RadioProps): JSX.Element => {
     <div className='relative pl-7'>
       <label htmlFor={id} className='cursor-pointer'>
         <input
-          id={id}
-          name={id}
           type='radio'
           className='peer hidden'
+          id={String(id)}
           {...props}
         />
 

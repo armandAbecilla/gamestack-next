@@ -9,12 +9,14 @@ type AccordionProps = {
   label: string;
   isOpen: boolean;
   children: ReactNode;
+  className?: string;
 };
 
 const Accordion = ({
   label,
   isOpen,
   children,
+  className,
 }: AccordionProps): JSX.Element => {
   const [isCollapsed, setIsCollapsed] = useState(!isOpen);
 
@@ -25,7 +27,7 @@ const Accordion = ({
   const caretClasses = 'w-[12px] text-stone-200';
 
   return (
-    <div>
+    <div className={className}>
       <button
         className='flex w-full cursor-pointer items-center justify-between hover:opacity-90'
         onClick={handleToggleCollapse}

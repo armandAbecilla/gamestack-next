@@ -29,6 +29,10 @@ export const fetchUserGames = async ({
       url += '&title=' + filters.title;
     }
 
+    if (filters?.timeUnit) {
+      url += '&filterByTimeUnit=' + filters.timeUnit;
+    }
+
     const response = await axios.get(url, { signal: signal });
     return response.data;
   } catch (e: unknown) {

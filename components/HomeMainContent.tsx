@@ -12,6 +12,7 @@ const HomeMainContent = (): JSX.Element => {
   const deboucedFilters = useDebounce(filters, 1000);
 
   function handleFilterChange(newFilters: GameListFilters) {
+    console.log('filter changed', newFilters);
     setFilters(newFilters);
   }
 

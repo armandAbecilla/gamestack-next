@@ -1,34 +1,45 @@
 'use client';
 
-// import Button from './UI/Button';
-// import Checkbox from './UI/Checkbox';
 import { useEffect, useState } from 'react';
 
 import Accordion from '@/components/UI/Accordion';
+import Button from '@/components/UI/Button';
 import Radio from '@/components/UI/Radio';
-import { statusOptions } from '@/data/dropdowns';
-import { GameListFilters } from '@/models/types';
+// import Checkbox from './UI/Checkbox';
+import { statusOptions, timeUnitOptions } from '@/data/dropdowns';
+import { GameListFilters, Status, TimeUnit } from '@/models/types';
 
 type SidebarProps = {
   onFilterChange: (filters: GameListFilters) => void;
 };
 
+const initialFilters: GameListFilters = {
+  title: '',
+  status: '',
+  timeUnit: '',
+};
+
 const Sidebar = ({ onFilterChange }: SidebarProps) => {
-  const [filters, setFilters] = useState({
-    title: '',
-    status: '',
-  });
+  const [filters, setFilters] = useState<GameListFilters>(initialFilters);
 
   const [titleInput, setTitleInput] = useState('');
 
   useEffect(() => {
+    console.log('filters updated', filters);
     onFilterChange(filters);
   }, [filters]);
 
-  const handleStatusSelect = (status: string) => {
+  const handleStatusSelect = (status: Status | '') => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       status: status,
+    }));
+  };
+
+  const handleFilterByTimeUnit = (timeUnit: TimeUnit | '') => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      timeUnit: timeUnit,
     }));
   };
 
@@ -52,15 +63,24 @@ const Sidebar = ({ onFilterChange }: SidebarProps) => {
         ></input>
       </div>
 
-      <Accordion label='Filter by Status' isOpen>
+      <Button
+        className='text-left text-amber-500! hover:text-amber-400!'
+        type='button'
+        textOnly
+        onClick={() => setFilters(initialFilters)}
+      >
+        Reset filters
+      </Button>
+
+      <Accordion className='mt-4' label='Filter by Status' isOpen>
         <div className='flex flex-col gap-1'>
           <Radio
             name='status'
-            id='all'
+            id='all_status'
             label='All'
-            value='all'
-            defaultChecked
-            onClick={() => handleStatusSelect('')}
+            value=''
+            checked={filters.status === ''}
+            onChange={() => handleStatusSelect('')}
           />
           {statusOptions.map((status) => (
             <Radio
@@ -69,8 +89,32 @@ const Sidebar = ({ onFilterChange }: SidebarProps) => {
               id={String(status.value)}
               label={status.label}
               value={status.value}
-              defaultChecked={filters?.status === status.value}
-              onClick={() => handleStatusSelect(String(status.value))}
+              checked={filters?.status === status.value}
+              onChange={() => handleStatusSelect(status.value)}
+            />
+          ))}
+        </div>
+      </Accordion>
+
+      <Accordion className='mt-4' label='Filter by Date Updated' isOpen>
+        <div className='flex flex-col gap-1'>
+          <Radio
+            name='timeUnit'
+            id='all_timeUnit'
+            label='All'
+            value=''
+            checked={filters.timeUnit === ''}
+            onChange={() => handleFilterByTimeUnit('')}
+          />
+          {timeUnitOptions.map((option) => (
+            <Radio
+              key={option.value}
+              name='timeUnit'
+              id={String(option.value)}
+              label={option.label}
+              value={option.value}
+              checked={filters?.timeUnit === option.value}
+              onChange={() => handleFilterByTimeUnit(option.value)}
             />
           ))}
         </div>
