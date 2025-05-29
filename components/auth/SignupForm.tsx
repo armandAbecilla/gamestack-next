@@ -40,7 +40,6 @@ export default function SignupForm() {
                 onChange={emailInput.onChange}
                 onBlur={emailInput.onBlur}
                 id='email'
-                label='Email'
                 type='email'
                 required
               />
@@ -60,7 +59,6 @@ export default function SignupForm() {
                 onChange={firstNameInput.onChange}
                 onBlur={firstNameInput.onBlur}
                 id='first-name'
-                label='First Name'
                 type='text'
                 required
               />
@@ -80,7 +78,6 @@ export default function SignupForm() {
                 onChange={lastNameInput.onChange}
                 onBlur={lastNameInput.onBlur}
                 id='last-name'
-                label='Last Name'
                 type='text'
                 required
               />
@@ -100,7 +97,6 @@ export default function SignupForm() {
                 onChange={passwordInput.onChange}
                 onBlur={passwordInput.onBlur}
                 id='password'
-                label='Password'
                 type='password'
                 minLength={6}
                 required
@@ -121,7 +117,6 @@ export default function SignupForm() {
                 onChange={repeatPasswordInput.onChange}
                 onBlur={repeatPasswordInput.onBlur}
                 id='repeat-password'
-                label='Repeat Password'
                 type='password'
                 required
               />
