@@ -35,6 +35,9 @@ const GameList = ({ filters }: GameListProps) => {
     querySelector.invalidateQueries({
       queryKey: ['games'],
     });
+
+    // reset page
+    setPage(1);
   }, [filters]);
 
   // react query
