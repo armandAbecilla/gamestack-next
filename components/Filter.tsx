@@ -22,8 +22,6 @@ const initialFilters: GameListFilters = {
 const Filter = ({ onFilterChange }: FilterProps) => {
   const [filters, setFilters] = useState<GameListFilters>(initialFilters);
 
-  const [titleInput, setTitleInput] = useState('');
-
   useEffect(() => {
     console.log('filters updated', filters);
     onFilterChange(filters);
@@ -44,7 +42,6 @@ const Filter = ({ onFilterChange }: FilterProps) => {
   };
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setTitleInput(e.target.value);
     setFilters((prevFilters) => ({
       ...prevFilters,
       title: e.target.value,
@@ -59,7 +56,7 @@ const Filter = ({ onFilterChange }: FilterProps) => {
           className='mt-2 w-full rounded-sm border border-stone-500 bg-stone-100 px-2 text-lg text-stone-800'
           type='text'
           onChange={handleInputChange}
-          value={titleInput}
+          value={filters.title}
         ></input>
       </div>
 
