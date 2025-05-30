@@ -100,15 +100,33 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
       queryClient.invalidateQueries({
         queryKey: ['games'],
       });
+      queryClient.invalidateQueries({
+        queryKey: ['stats'], // invalidate the stats in homepage
+      });
     },
   });
+
   const mutateRemoveFromLibrary = useOptimisticUpdating(
     userGameKey,
     removeGameFromList,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['stats'], // invalidate the stats in homepage
+        });
+      },
+    },
   );
   const mutateUpdateUserGameData = useOptimisticUpdating(
     userGameKey,
     updateUserGameData,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['stats'], // invalidate the stats in homepage
+        });
+      },
+    },
   );
 
   async function handleAddToLibrary() {
