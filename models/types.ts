@@ -32,3 +32,11 @@ export type TimeUnitOption = {
   label: string;
   value: TimeUnit;
 };
+
+export type NewGameData = {
+  userId: string;
+  rawgGameId: string;
+  rawgGameTitle: string;
+  status: string;
+  notes: string;
+};

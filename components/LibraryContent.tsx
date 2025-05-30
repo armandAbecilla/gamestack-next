@@ -7,7 +7,7 @@ import useDebounce from '@/utils/hooks/useDebounce';
 import GameList from './GameList';
 import Sidebar from './Sidebar';
 
-const HomeMainContent = (): JSX.Element => {
+const LibraryContent = (): JSX.Element => {
   const [filters, setFilters] = useState<GameListFilters>({});
   const deboucedFilters = useDebounce(filters, 1000);
 
@@ -29,4 +29,4 @@ const HomeMainContent = (): JSX.Element => {
   );
 };
 
-export default HomeMainContent;
+export default LibraryContent;

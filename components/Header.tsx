@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useSelector } from 'react-redux';
 
 import logoImage from '@/assets/gamestack-logo.png';
@@ -10,10 +11,13 @@ import LogoutButton from './LogoutButton';
 
 const Header = () => {
   const { user } = useSelector((state: RootState) => state.auth);
+  const path = usePathname();
+  const activeClass = 'text-amber-500';
+  const isAuthPages = path === '/login' || path === '/signup';
 
   return (
     <>
-      {user && (
+      {!isAuthPages && (
         <header className='flex items-center justify-between py-7'>
           <div className='flex items-center gap-4'>
             <Link href='/'>
@@ -22,12 +26,26 @@ const Header = () => {
 
             <Link
               href='/'
-              className='font-heading text-darkgreen text-[2rem] font-bold tracking-wider uppercase'
+              className='font-heading text-darkgreen cursor-pointer text-lg font-bold tracking-wider uppercase md:text-[2rem]'
             >
               GameStack
             </Link>
           </div>
-          <nav className='flex gap-4'>{user && <LogoutButton />}</nav>
+
+          {user && (
+            <nav>
+              <ul className='flex items-center gap-4'>
+                <li
+                  className={`hover:text-amber-400 ${path.startsWith('/library') ? activeClass : undefined}`}
+                >
+                  <Link href='/library'>My Collection</Link>
+                </li>
+                <li>
+                  <LogoutButton />
+                </li>
+              </ul>
+            </nav>
+          )}
         </header>
       )}
     </>

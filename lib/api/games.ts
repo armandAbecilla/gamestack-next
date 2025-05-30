@@ -1,10 +1,11 @@
 import axios from 'axios';
 
 import projectConfig from '@/config/config';
-import { GameListFilters } from '@/models/types';
+import { GameListFilters, NewGameData } from '@/models/types';
 
 export const MAX_PAGE_SIZE = 25;
 
+// Fetch user games from Supabase DB
 export const fetchUserGames = async ({
   signal,
   userId,
@@ -49,6 +50,7 @@ export const fetchUserGames = async ({
   }
 };
 
+// Fetch games by keyword from RAWG.io API
 export const fetchGameByKeyword = async ({
   signal,
   searchTerm,
@@ -100,14 +102,7 @@ export const fetchUserGameDetail = async ({
   return result?.data[0] ?? null;
 };
 
-type NewGameData = {
-  userId: string;
-  rawgGameId: string;
-  rawgGameTitle: string;
-  status: string;
-  notes: string;
-};
-
+// Create entries in Supabase DB
 export const addGameToList = async ({
   signal,
   data,
@@ -121,6 +116,7 @@ export const addGameToList = async ({
   return result.data;
 };
 
+// Remove entry from SupabaseDB
 export const removeGameFromList = async ({
   signal,
   id,
@@ -133,6 +129,7 @@ export const removeGameFromList = async ({
   });
 };
 
+// Update entry from SupabaseDB
 export const updateUserGameData = async ({
   signal,
   id,
@@ -146,6 +143,34 @@ export const updateUserGameData = async ({
     const response = await axios.patch(
       `${projectConfig.API_URL}/games/${id}`,
       gameData,
+      { signal: signal },
+    );
+
+    return response.data ?? null;
+  } catch (e) {
+    if (e instanceof Error) {
+      return new Response(
+        JSON.stringify({
+          message: e.message || 'Failed to update data.',
+        }),
+        { status: 500 },
+      );
+    } else {
+      console.error('Unknown error:', e);
+    }
+  }
+};
+
+export const getUserStats = async ({
+  signal,
+  id,
+}: {
+  signal: AbortSignal;
+  id: string;
+}) => {
+  try {
+    const response = await axios.get(
+      `${projectConfig.API_URL}/games/user/${id}/stats`,
       { signal: signal },
     );
 

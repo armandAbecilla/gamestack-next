@@ -32,7 +32,7 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en'>
-      <body className={`${rajdhani.className} ${worksans.className}`}>
+      <body className={`${rajdhani.className} ${worksans.className} pb-20`}>
         <div id='modal'></div>
         <Provider>
           <AuthListener />
