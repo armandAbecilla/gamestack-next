@@ -23,7 +23,12 @@ const eslintConfig = [
     },
     rules: {
       // Prettier formatting as warning
-      'prettier/prettier': 'warn',
+      'prettier/prettier': [
+        'warn',
+        {
+          endOfLine: 'auto',
+        },
+      ],
 
       // TypeScript
       '@typescript-eslint/no-explicit-any': 'warn',

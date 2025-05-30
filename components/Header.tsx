@@ -26,7 +26,7 @@ const Header = () => {
 
             <Link
               href='/'
-              className='font-heading text-darkgreen cursor-pointer text-lg font-bold tracking-wider uppercase md:text-[2rem]'
+              className='font-heading text-darkgreen hidden cursor-pointer text-lg font-bold tracking-wider uppercase md:block md:text-[2rem]'
             >
               GameStack
             </Link>

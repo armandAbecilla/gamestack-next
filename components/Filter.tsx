@@ -9,7 +9,7 @@ import Radio from '@/components/UI/Radio';
 import { statusOptions, timeUnitOptions } from '@/data/dropdowns';
 import { GameListFilters, Status, TimeUnit } from '@/models/types';
 
-type SidebarProps = {
+type FilterProps = {
   onFilterChange: (filters: GameListFilters) => void;
 };
 
@@ -19,7 +19,7 @@ const initialFilters: GameListFilters = {
   timeUnit: '',
 };
 
-const Sidebar = ({ onFilterChange }: SidebarProps) => {
+const Filter = ({ onFilterChange }: FilterProps) => {
   const [filters, setFilters] = useState<GameListFilters>(initialFilters);
 
   const [titleInput, setTitleInput] = useState('');
@@ -27,7 +27,7 @@ const Sidebar = ({ onFilterChange }: SidebarProps) => {
   useEffect(() => {
     console.log('filters updated', filters);
     onFilterChange(filters);
-  }, [filters]);
+  }, [filters, onFilterChange]);
 
   const handleStatusSelect = (status: Status | '') => {
     setFilters((prevFilters) => ({
@@ -123,4 +123,4 @@ const Sidebar = ({ onFilterChange }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default Filter;
