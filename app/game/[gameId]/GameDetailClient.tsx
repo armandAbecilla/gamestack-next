@@ -181,7 +181,11 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
 
   return (
     <>
-      <Button onClick={() => redirect('/')} className='mb-4 text-lg' textOnly>
+      <Button
+        onClick={() => redirect('/library')}
+        className='mb-4 text-lg'
+        textOnly
+      >
         ← Back to your library
       </Button>
       <GameDetails

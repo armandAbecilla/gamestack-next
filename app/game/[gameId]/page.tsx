@@ -1,7 +1,9 @@
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+// import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { notFound, redirect } from 'next/navigation';
+import { Suspense } from 'react';
 
-import queryClient from '@/lib/api';
+import GameDetailsSkeleton from '@/components/skeleton-loaders/GameDetails';
+// import queryClient from '@/lib/api';
 import { fetchGameDetails } from '@/lib/api/games';
 import { createClient } from '@/lib/supabase/server';
 
@@ -40,16 +42,24 @@ export default async function GameDetailPage({
     redirect('/login');
   }
 
-  await queryClient.prefetchQuery({
-    queryKey: ['selectedGame', gameId],
-    queryFn: ({ signal }) => fetchGameDetails({ signal, gameId: gameId }),
-  });
-
-  const dehydratedState = dehydrate(queryClient);
-
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <Suspense fallback={<GameDetailsSkeleton />}>
       <GameDetailClient gameId={gameId} />
-    </HydrationBoundary>
+    </Suspense>
   );
+
+  // Keep this code for reference on how to use Hydration with prefetchQuery
+
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['selectedGame', gameId],
+  //   queryFn: ({ signal }) => fetchGameDetails({ signal, gameId: gameId }),
+  // });
+
+  // const dehydratedState = dehydrate(queryClient);
+
+  // return (
+  //   <HydrationBoundary state={dehydratedState}>
+  //    <GameDetailClient gameId={gameId} />
+  //   </HydrationBoundary>
+  // );
 }
