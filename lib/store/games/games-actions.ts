@@ -4,7 +4,7 @@ import axios from 'axios';
 import projectConfig from '@/config/config'; // environment variable
 import { UserGameData } from '@/models/interfaces';
 
-const MAX_PAGE_SIZE = 25;
+const MAX_PAGE_SIZE = 24;
 
 export const fetchUserGames = createAsyncThunk(
   'games/fetchUserGames',

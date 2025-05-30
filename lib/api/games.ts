@@ -3,7 +3,7 @@ import axios from 'axios';
 import projectConfig from '@/config/config';
 import { GameListFilters, NewGameData } from '@/models/types';
 
-export const MAX_PAGE_SIZE = 25;
+export const MAX_PAGE_SIZE = 24;
 
 // Fetch user games from Supabase DB
 export const fetchUserGames = async ({
