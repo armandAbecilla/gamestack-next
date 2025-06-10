@@ -6,6 +6,7 @@ type SelectProps = {
   id: string;
   options: SelectOption[];
   defaultPlaceholder: string;
+  className?: string;
 } & DetailedHTMLProps<
   SelectHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
@@ -15,11 +16,12 @@ const Select = ({
   id,
   options,
   defaultPlaceholder = 'Please Select',
+  className,
   ...props
 }: SelectProps): JSX.Element => {
   return (
     <select
-      className='w-full bg-white p-1 text-xl text-stone-800 focus:outline-none'
+      className={`w-full bg-white p-1 text-xl text-stone-800 focus:outline-none ${className}`}
       id={id}
       name={id}
       {...props}

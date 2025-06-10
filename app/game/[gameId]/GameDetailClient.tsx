@@ -170,6 +170,16 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
     });
   }
 
+  function handlePlatformSelect(platform: string) {
+    mutateUpdateUserGameData.mutate({
+      id: userGameData.id,
+      gameData: {
+        ...userGameData,
+        platform: platform,
+      },
+    });
+  }
+
   // Edit notes handlers
   function handleOpenModal() {
     setNotesModalOpen(true);
@@ -196,6 +206,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
         onStatusChange={handleStatusChange}
         onEditNote={handleOpenModal}
         isLoading={isGameFetching}
+        onPlatformSelect={handlePlatformSelect}
       />
 
       <EditNotesModal

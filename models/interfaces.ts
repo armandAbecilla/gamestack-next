@@ -12,6 +12,7 @@ export interface UserGameData {
   id: number;
   created_at: string;
   status?: string;
+  platform?: string;
   notes: string;
   user_id: string;
   rawg_game_id: number;

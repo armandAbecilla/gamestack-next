@@ -5,8 +5,10 @@ import Button from '@/components/UI/Button';
 import FancySelect from '@/components/UI/FancySelect';
 import { statusOptions } from '@/data/dropdowns';
 import { GameData, UserGameData } from '@/models/interfaces';
+import { SelectOption } from '@/models/types';
 
 import GameDetailsSkeleton from './skeleton-loaders/GameDetails';
+import Select from './UI/Select';
 
 type GameDetailsProps = {
   gameData: GameData;
@@ -15,6 +17,7 @@ type GameDetailsProps = {
   onRemoveFromLibrary: () => void;
   userGameData: UserGameData;
   onStatusChange: (status: string | number) => void;
+  onPlatformSelect: (platform: string) => void;
   onEditNote: () => void;
 };
 
@@ -25,6 +28,7 @@ const GameDetails = ({
   onRemoveFromLibrary,
   userGameData,
   onStatusChange,
+  onPlatformSelect,
   onEditNote,
 }: GameDetailsProps): JSX.Element => {
   //  skeleton loader
@@ -32,10 +36,16 @@ const GameDetails = ({
     return <GameDetailsSkeleton />;
   }
 
-  const platforms = gameData?.platforms.map((item, index) => (
-    <span key={item.platform.id}>
-      {item.platform.name}
-      {index !== gameData.platforms.length - 1 ? ', ' : ''}
+  const platformsSelect: SelectOption[] = gameData?.platforms.map((item) => ({
+    id: item.platform.id,
+    label: item.platform.name,
+    value: item.platform.name,
+  }));
+
+  const platforms = platformsSelect?.map((i, index) => (
+    <span key={i.value}>
+      {i.value}
+      {index !== platformsSelect.length - 1 ? ', ' : ''}
     </span>
   ));
 
@@ -100,11 +110,22 @@ const GameDetails = ({
               <span className='text-stone-100'>Developed by: {developers}</span>
 
               {onUserList && (
-                <FancySelect
-                  options={statusOptions}
-                  defaultValue={userGameData.status}
-                  onChange={onStatusChange}
-                />
+                <>
+                  <FancySelect
+                    options={statusOptions}
+                    defaultValue={userGameData.status}
+                    onChange={onStatusChange}
+                  />
+
+                  <Select
+                    id='platformSelect'
+                    defaultPlaceholder='Select Platform'
+                    options={platformsSelect}
+                    defaultValue={userGameData.platform || ''}
+                    className='mt-4 max-w-[200px] !bg-stone-600 px-4 !text-lg !text-stone-300'
+                    onChange={(e) => onPlatformSelect(e.target.value)}
+                  />
+                </>
               )}
 
               {/* user options */}
