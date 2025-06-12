@@ -40,6 +40,7 @@ type FancySelectProps = {
   onChange?: (value: string | number) => void;
   name?: string;
   disabled?: boolean;
+  className?: string;
 };
 
 const FancySelect = ({
@@ -51,6 +52,7 @@ const FancySelect = ({
   onChange,
   name,
   disabled,
+  className,
 }: FancySelectProps): JSX.Element => {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dropdownContainerRef = useRef<HTMLDivElement>(null);
@@ -156,7 +158,7 @@ const FancySelect = ({
         ref={triggerRef}
         onClick={toggleDropdown}
         type='button'
-        className={`w-max min-w-fit cursor-pointer rounded-full border border-stone-700/50 px-5 py-1 text-left backdrop-blur-md ${selectedClasess} ${disabledClasses}`}
+        className={`w-max min-w-fit cursor-pointer rounded-full border border-stone-700/50 px-5 py-1 text-left backdrop-blur-md ${selectedClasess} ${disabledClasses} ${className}`}
       >
         {selectedLabel || placeholderValue}
       </button>

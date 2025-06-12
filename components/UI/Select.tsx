@@ -21,7 +21,7 @@ const Select = ({
 }: SelectProps): JSX.Element => {
   return (
     <select
-      className={`w-full bg-white p-1 text-xl text-stone-800 focus:outline-none ${className}`}
+      className={`h-9 w-full bg-white px-[calc(0.5rem_+_0.5px)] py-1 text-sm text-stone-800 focus:outline-none ${className}`}
       id={id}
       name={id}
       {...props}

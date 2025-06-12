@@ -1,3 +1,4 @@
+import { DateValue } from '@internationalized/date';
 import Image from 'next/image';
 import { JSX } from 'react';
 
@@ -8,6 +9,7 @@ import { GameData, UserGameData } from '@/models/interfaces';
 import { SelectOption } from '@/models/types';
 
 import GameDetailsSkeleton from './skeleton-loaders/GameDetails';
+import CustomDatePicker from './UI/CustomDatePicker';
 import Select from './UI/Select';
 
 type GameDetailsProps = {
@@ -19,6 +21,8 @@ type GameDetailsProps = {
   onStatusChange: (status: string | number) => void;
   onPlatformSelect: (platform: string) => void;
   onEditNote: () => void;
+  onStartDateSelect: (date: DateValue | null) => void;
+  onCompletedDateSelect: (date: DateValue | null) => void;
 };
 
 const GameDetails = ({
@@ -30,6 +34,8 @@ const GameDetails = ({
   onStatusChange,
   onPlatformSelect,
   onEditNote,
+  onStartDateSelect,
+  onCompletedDateSelect,
 }: GameDetailsProps): JSX.Element => {
   //  skeleton loader
   if (isLoading) {
@@ -111,20 +117,38 @@ const GameDetails = ({
 
               {onUserList && (
                 <>
-                  <FancySelect
-                    options={statusOptions}
-                    defaultValue={userGameData.status}
-                    onChange={onStatusChange}
-                  />
+                  <div className='flex items-center gap-4'>
+                    <FancySelect
+                      options={statusOptions}
+                      defaultValue={userGameData.status}
+                      onChange={onStatusChange}
+                    />
 
-                  <Select
-                    id='platformSelect'
-                    defaultPlaceholder='Select Platform'
-                    options={platformsSelect}
-                    defaultValue={userGameData.platform || ''}
-                    className='mt-4 max-w-[200px] !bg-stone-600 px-4 !text-lg !text-stone-300'
-                    onChange={(e) => onPlatformSelect(e.target.value)}
-                  />
+                    <Select
+                      id='platformSelect'
+                      defaultPlaceholder='Select Platform'
+                      options={platformsSelect}
+                      defaultValue={userGameData.platform || ''}
+                      className='max-w-[200px] !bg-stone-600 !text-stone-300'
+                      onChange={(e) => onPlatformSelect(e.target.value)}
+                    />
+                  </div>
+
+                  {onUserList && userGameData.status !== 'wishlist' && (
+                    <div className='flex items-center gap-4'>
+                      <CustomDatePicker
+                        onDateSelect={onStartDateSelect}
+                        label='Date Started'
+                        className='flex-1'
+                      />
+
+                      <CustomDatePicker
+                        onDateSelect={onCompletedDateSelect}
+                        label='Date Completed'
+                        className='flex-1'
+                      />
+                    </div>
+                  )}
                 </>
               )}
 
@@ -139,6 +163,9 @@ const GameDetails = ({
                     </Button>
                     <Button className='ml-4' textOnly onClick={onEditNote}>
                       Edit note
+                    </Button>
+                    <Button className='ml-4' textOnly>
+                      Edit User Logs
                     </Button>
                   </>
                 )}

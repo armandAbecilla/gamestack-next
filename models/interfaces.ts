@@ -9,7 +9,7 @@ export interface GameData {
 }
 
 export interface UserGameData {
-  id: number;
+  id: string;
   created_at: string;
   status?: string;
   platform?: string;

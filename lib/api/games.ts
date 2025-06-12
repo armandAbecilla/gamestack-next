@@ -122,7 +122,7 @@ export const removeGameFromList = async ({
   id,
 }: {
   signal?: AbortSignal;
-  id: number;
+  id: string;
 }) => {
   await axios.delete(`${projectConfig.API_URL}/games/${id}`, {
     signal: signal,

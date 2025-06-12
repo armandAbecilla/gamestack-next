@@ -7,7 +7,7 @@ import GameDetailsSkeleton from '@/components/skeleton-loaders/GameDetails';
 import { fetchGameDetails } from '@/lib/api/games';
 import { createClient } from '@/lib/supabase/server';
 
-import GameDetailClient from './GameDetailClient';
+import GameDetailClient from './GameDetailClient/index';
 
 export async function generateMetadata({
   params,
