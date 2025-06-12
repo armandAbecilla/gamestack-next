@@ -29,11 +29,10 @@ const Modal = ({
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         innerContainer.current &&
-        !innerContainer.current.contains(event.target) &&
-        event.button === 0
+        !innerContainer.current?.contains(event.target as Node)
       ) {
         onClose?.();
       }

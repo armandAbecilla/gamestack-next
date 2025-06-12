@@ -19,17 +19,23 @@ type CustomDatePickerProps = {
   label: string;
   onDateSelect: (date: DateValue | null) => void;
   className?: string;
+  value?: DateValue | null;
+  required?: boolean;
 };
 const CustomDatePicker = ({
   label,
   onDateSelect,
   className,
+  value,
+  required,
 }: CustomDatePickerProps): JSX.Element => {
   return (
     <DatePicker
       className={`*:not-first:mt-2 ${className}`}
       onChange={(e: DateValue | null) => onDateSelect(e)}
+      value={value}
       aria-labelledby={label}
+      isRequired={required}
     >
       <Label className='text-stone-300'>{label}</Label>
       <div className='flex'>

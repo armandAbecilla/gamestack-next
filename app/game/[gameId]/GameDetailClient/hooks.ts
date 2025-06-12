@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-query';
 
 import queryClient from '@/lib/api';
+import { addSession, getGameSessions } from '@/lib/api/game-sessions';
 import {
   addGameToList,
   fetchGameDetails,
@@ -114,6 +115,26 @@ export const useMutateUpdateUserGameData = (userGameKey: QueryKey) => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['stats'], // invalidate the stats in homepage
+      });
+    },
+  });
+};
+
+export const useGetGameSessions = (gameId: string, userId: string) => {
+  const gameSessionKey = ['game-sessions', gameId, userId];
+  return useQuery({
+    queryKey: gameSessionKey,
+    queryFn: ({ signal }) => getGameSessions({ signal, gameId, userId }),
+    enabled: !!userId,
+  });
+};
+
+export const useMutateAddSession = (gameId: string, userId: string) => {
+  const gameSessionKey = ['game-sessions', gameId, userId];
+  return useOptimisticUpdating(gameSessionKey, addSession, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['game-sessions', gameId, userId],
       });
     },
   });
