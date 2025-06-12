@@ -15,6 +15,7 @@ import { SelectOption } from '@/models/types';
 
 import EditNotesModal from './EditNotesModal';
 import { useGameDetailClient } from './GameDetailContext';
+import GameLogModal from './GameLogModal';
 import { useGameDetail, useUserGameData } from './hooks';
 
 // type GameDetailsProps = {
@@ -31,6 +32,7 @@ const GameDetails = (): JSX.Element => {
   );
   const { data: userGameData } = useUserGameData(gameId as string, userId);
   const [notesModalOpen, setNotesModalOpen] = useState(false);
+  const [gameLogModalOpen, setGameLogModalOpen] = useState(false);
 
   const { addToLibrary, removeFromLibrary, setStatus, setPlatform } =
     useGameDetailClient();
@@ -173,7 +175,11 @@ const GameDetails = (): JSX.Element => {
                     >
                       Edit note
                     </Button>
-                    <Button className='ml-4' textOnly>
+                    <Button
+                      className='ml-4'
+                      textOnly
+                      onClick={() => setGameLogModalOpen(true)}
+                    >
                       Edit User Logs
                     </Button>
                   </>
@@ -226,6 +232,8 @@ const GameDetails = (): JSX.Element => {
         open={notesModalOpen}
         onClose={() => setNotesModalOpen(false)}
       />
+
+      <GameLogModal open={gameLogModalOpen} />
     </>
   );
 };
