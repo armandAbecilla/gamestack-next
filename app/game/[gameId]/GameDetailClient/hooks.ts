@@ -8,14 +8,11 @@ import {
 } from '@tanstack/react-query';
 
 import queryClient from '@/lib/api';
-<<<<<<< Updated upstream
-=======
 import {
   addSession,
   getGameSessions,
   updateSession,
 } from '@/lib/api/game-sessions';
->>>>>>> Stashed changes
 import {
   addGameToList,
   fetchGameDetails,
@@ -126,8 +123,6 @@ export const useMutateUpdateUserGameData = (userGameKey: QueryKey) => {
     },
   });
 };
-<<<<<<< Updated upstream
-=======
 
 export const useGetGameSessions = (gameId: string, userId: string) => {
   const gameSessionKey = ['game-sessions', gameId, userId];
@@ -159,4 +154,3 @@ export const useMutateUpdateSession = (gameId: string, userId: string) => {
     },
   });
 };
->>>>>>> Stashed changes

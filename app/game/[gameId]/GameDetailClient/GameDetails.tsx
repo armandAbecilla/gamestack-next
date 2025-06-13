@@ -1,92 +1,24 @@
 'use client';
 
 <<<<<<< Updated upstream
-import Image from 'next/image';
 =======
 import Link from 'next/link';
 >>>>>>> Stashed changes
 import { useParams } from 'next/navigation';
-import { JSX, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { JSX } from 'react';
 
-import GameDetailsSkeleton from '@/components/skeleton-loaders/GameDetails';
-import Button from '@/components/UI/Button';
-import FancySelect from '@/components/UI/FancySelect';
-import Select from '@/components/UI/Select';
-import { statusOptions } from '@/data/dropdowns';
-import { RootState } from '@/lib/store/store';
-import { SelectOption } from '@/models/types';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/UI/tabs';
 
-import EditNotesModal from './EditNotesModal';
-import { useGameDetailClient } from './GameDetailContext';
-import GameLogModal from './GameLogModal';
-import { useGameDetail, useUserGameData } from './hooks';
-
-// type GameDetailsProps = {
-//   onStartDateSelect: (date: DateValue | null) => void;
-//   onCompletedDateSelect: (date: DateValue | null) => void;
-// };
+import GameOverview from './GameOverview';
+import GameSessions from './GameSessions';
+import { useGameDetail } from './hooks';
 
 const GameDetails = (): JSX.Element => {
-  const auth = useSelector((state: RootState) => state.auth);
-  const userId = auth.user?.id;
   const { gameId } = useParams();
-  const { data: gameData, isLoading: isGameDataFetching } = useGameDetail(
-    gameId as string,
-  );
-  const { data: userGameData } = useUserGameData(gameId as string, userId);
-  const [notesModalOpen, setNotesModalOpen] = useState(false);
-  const [gameLogModalOpen, setGameLogModalOpen] = useState(false);
+  const { data: gameData } = useGameDetail(gameId as string);
 
-  const { addToLibrary, removeFromLibrary, setStatus, setPlatform } =
-    useGameDetailClient();
-  //  skeleton loader
-  if (isGameDataFetching) {
-    return <GameDetailsSkeleton />;
-  }
-
-  if (!gameData) {
-    return <p>Data not found </p>;
-  }
-
-  const platformsSelect: SelectOption[] = gameData.platforms.map((item) => ({
-    id: item.platform.id,
-    label: item.platform.name,
-    value: item.platform.name,
-  }));
-
-  const platforms = platformsSelect.map((i, index) => (
-    <span key={i.value}>
-      {i.value}
-      {index !== platformsSelect.length - 1 ? ', ' : ''}
-    </span>
-  ));
-
-  const developers = gameData.developers.map(
-    (devs, index) =>
-      `${devs.name}${index !== gameData.developers.length - 1 ? ', ' : ''}`,
-  );
-
-  const pcPlatform = gameData.platforms.find(
-    (item) => item.platform.name === 'PC',
-  );
-
-  // System Requirements
-  const minimumRequirement = (
-    <span className='mb-1 block whitespace-pre-line'>
-      {pcPlatform?.requirements?.minimum ||
-        'Minimum requirements not yet available'}
-    </span>
-  );
-
-  const recommendedRequirement = (
-    <span className='mb-1 block whitespace-pre-line'>
-      {pcPlatform?.requirements?.recommended ||
-        'Recommended requirements not yet available'}
-    </span>
-  );
-
-  const onUserList = userGameData && !!userGameData;
+  const tabsTriggerClassname =
+    'data-[state=active]:border-darkgreen border-b-2 overflow-hidden rounded-t-none rounded-b-none border-b-transparent py-2 data-[state=active]:z-10 data-[state=active]:bg-transparent data-[state=active]:shadow-none text-stone-400 data-[state=active]:text-white';
 
   return (
 <<<<<<< Updated upstream
