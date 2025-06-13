@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import projectConfig from '@/config/config';
+import { GameSession } from '@/models/types';
 
 export const getGameSessions = async ({
   signal,
@@ -37,13 +38,7 @@ export const addSession = async ({
   gameSessionData,
 }: {
   signal?: AbortSignal;
-  gameSessionData: {
-    date: string;
-    duration: number;
-    notes?: string;
-    userId: string;
-    gameId: string;
-  };
+  gameSessionData: GameSession;
 }) => {
   try {
     const response = await axios.post(
@@ -74,13 +69,7 @@ export const updateSession = async ({
 }: {
   signal?: AbortSignal;
   id: string;
-  updatedGameSessionData: {
-    date?: string;
-    duration?: number;
-    notes?: string;
-    userId?: string;
-    gameId?: string;
-  };
+  updatedGameSessionData: GameSession;
 }) => {
   try {
     const response = await axios.patch(

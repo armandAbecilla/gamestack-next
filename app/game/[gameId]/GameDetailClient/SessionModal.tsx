@@ -9,28 +9,37 @@ import CustomNumberInput from '@/components/UI/CustomNumberInput';
 import Input from '@/components/UI/Input';
 import Modal from '@/components/UI/Modal';
 import { RootState } from '@/lib/store/store';
+import { GameSession } from '@/models/types';
 
 import { useMutateAddSession, useMutateUpdateSession } from './hooks';
+import { parseDate } from '@internationalized/date';
 
 type SessionModalProps = {
   open: boolean;
   onClose: () => void;
   mode: 'add' | 'update';
-  sessionId?: string; // only for edit mode
+  sessionData?: GameSession;
 };
 
 const AddSessionModal = ({
   open,
   onClose,
   mode,
-  sessionId,
+  sessionData,
 }: SessionModalProps): JSX.Element => {
   const { gameId } = useParams();
   const auth = useSelector((state: RootState) => state.auth);
   const userId = auth.user?.id;
 
-  const [selectedDate, setSelectedDate] = useState<DateValue | null>(null);
-  const [duration, setDuration] = useState<number>(30);
+  const initialDate = sessionData ? parseDate(sessionData?.sessionDate) : null;
+  const initialDurationInMinutes = sessionData
+    ? sessionData.durationInMinutes
+    : 30;
+
+  const [selectedDate, setSelectedDate] = useState<DateValue | null>(
+    initialDate,
+  );
+  const [duration, setDuration] = useState<number>(initialDurationInMinutes);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { mutate: addSession, isPending } = useMutateAddSession(
@@ -46,18 +55,23 @@ const AddSessionModal = ({
     if (!selectedDate || !duration || !userId || !gameId) {
       return;
     }
-    const data = {
+
+    const data: GameSession = {
+      id: null,
       gameId: gameId as string,
       userId,
-      date: selectedDate?.toString(),
-      duration,
+      sessionDate: selectedDate?.toString(),
+      durationInMinutes: duration,
       notes: inputRef.current?.value || '',
     };
 
     if (mode === 'add') {
       addSession({ gameSessionData: data });
-    } else if (mode === 'update' && sessionId) {
-      updateSession({ id: sessionId, updatedGameSessionData: data });
+    } else if (mode === 'update' && sessionData) {
+      updateSession({
+        id: String(sessionData.id),
+        updatedGameSessionData: data,
+      });
     }
 
     onClose();
@@ -96,6 +110,7 @@ const AddSessionModal = ({
             placeholder='Write your thoughts...'
             className='text-sm!'
             ref={inputRef}
+            defaultValue={sessionData?.notes}
           />
         </div>
         <div className='mt-4 flex justify-end gap-2'>

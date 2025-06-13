@@ -5,6 +5,7 @@ import {
   useMutation,
   UseMutationOptions,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 
 import queryClient from '@/lib/api';
@@ -22,18 +23,18 @@ import {
 } from '@/lib/api/games';
 import { GameData } from '@/models/interfaces';
 
-type UseOptimisticUpdatingOptions<
-  TData,
-  TError,
-  TVariables,
-  TContext extends { prevData?: TData },
-> = UseMutationOptions<TData, TError, TVariables, TContext>;
+type UseOptimisticUpdatingOptions<TData, TError, TVariables, TContext> =
+  UseMutationOptions<TData, TError, TVariables, TContext> & {
+    updater?: (prevData: TData | undefined, newData: TVariables) => TData;
+  };
 
-const useOptimisticUpdating = <
+export const useOptimisticUpdating = <
   TData = unknown,
   TError = unknown,
   TVariables = unknown,
-  TContext extends { prevData?: TData } = { prevData?: TData },
+  TContext extends { prevData: TData | undefined } = {
+    prevData: TData | undefined;
+  },
 >(
   queryKey: QueryKey,
   mutationFn: (variables: TVariables) => Promise<TData>,
@@ -44,6 +45,8 @@ const useOptimisticUpdating = <
     TContext
   > = {},
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation<TData, TError, TVariables, TContext>({
     mutationFn,
     onMutate: async (newData: TVariables) => {
@@ -51,7 +54,11 @@ const useOptimisticUpdating = <
 
       const prevData = queryClient.getQueryData<TData>(queryKey);
 
-      queryClient.setQueryData<TData>(queryKey, newData as unknown as TData);
+      const optimisticData = options.updater
+        ? options.updater(prevData, newData)
+        : (newData as unknown as TData); // Fallback, recommend providing updater
+
+      queryClient.setQueryData<TData>(queryKey, optimisticData);
 
       return { prevData } as TContext;
     },
@@ -59,9 +66,11 @@ const useOptimisticUpdating = <
       if (context?.prevData !== undefined) {
         queryClient.setQueryData(queryKey, context.prevData);
       }
+      options.onError?.(error, variables, context);
     },
-    onSettled: () => {
+    onSettled: (data, error, variables, context) => {
       queryClient.invalidateQueries({ queryKey });
+      options.onSettled?.(data, error, variables, context);
     },
     ...options,
   });

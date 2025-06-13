@@ -40,3 +40,13 @@ export type NewGameData = {
   status: string;
   notes: string;
 };
+
+// for GameSession
+export type GameSession = {
+  userId: string;
+  id: string | null; // only applies for new session
+  gameId: string;
+  sessionDate: string;
+  durationInMinutes: number;
+  notes?: string;
+};
