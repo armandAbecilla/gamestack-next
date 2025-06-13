@@ -92,3 +92,33 @@ export const updateSession = async ({
     }
   }
 };
+
+export const deleteSession = async ({
+  signal,
+  id,
+}: {
+  signal?: AbortSignal;
+  id: string;
+}) => {
+  try {
+    const response = await axios.delete(
+      `${projectConfig.API_URL}/game-session/${id}`,
+      { signal: signal },
+    );
+
+    if (response.status === 204) {
+      return true;
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+      return new Response(
+        JSON.stringify({
+          message: e.message || 'Failed to add session.',
+        }),
+        { status: 500 },
+      );
+    } else {
+      console.error('Unknown error:', e);
+    }
+  }
+};

@@ -3,13 +3,16 @@ import { useParams } from 'next/navigation';
 import { JSX, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import ConfirmationModal from '@/components/ConfirmationModal';
 import Button from '@/components/UI/Button';
 import { RootState } from '@/lib/store/store';
 import { dateToString, minutesToHours } from '@/lib/utils';
 import { GameSession } from '@/models/types';
 
-import { useGetGameSessions } from './hooks';
+import { useGetGameSessions, useMutateDeleteSession } from './hooks';
 import SessionModal from './SessionModal';
+
+type ModeTypes = 'add' | 'update' | 'delete';
 
 const GameSessions = (): JSX.Element => {
   const { gameId } = useParams();
@@ -21,28 +24,63 @@ const GameSessions = (): JSX.Element => {
     userId as string,
   );
 
+  const { mutate: removeSession } = useMutateDeleteSession(
+    gameId as string,
+    userId as string,
+  );
+
   const [open, setOpen] = useState(false);
-  const mode = useRef<'add' | 'update'>('add');
+  const mode = useRef<ModeTypes>('add');
   const [selectedSession, setSelectedSession] = useState<
     GameSession | undefined
   >(undefined);
+
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
 
   const handleAddSesssion = () => {
     mode.current = 'add';
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseSessionModal = () => {
     mode.current = 'add';
     setOpen(false);
     setSelectedSession(undefined);
   };
 
-  const handleEdit = (session: GameSession) => {
-    mode.current = 'update';
+  const handleSelectSession = (
+    session: GameSession,
+    modeStr: 'update' | 'delete',
+  ) => {
+    mode.current = modeStr;
     setSelectedSession(session);
-    setOpen(true);
+
+    if (mode.current === 'update') {
+      setOpen(true);
+      return;
+    }
+
+    if (mode.current === 'delete') {
+      setDeleteConfirmOpen(true);
+      return;
+    }
   };
+
+  const handleConfirmationClose = () => {
+    setDeleteConfirmOpen(false);
+    mode.current = 'add'; // reset to default 'add' mode
+    setSelectedSession(undefined);
+  };
+
+  const handleDeleteSession = () => {
+    const sessionId = selectedSession?.id;
+    if (sessionId) {
+      removeSession({ id: sessionId });
+      handleConfirmationClose();
+    }
+  };
+
+  console.log(open);
 
   return (
     <div>
@@ -50,9 +88,7 @@ const GameSessions = (): JSX.Element => {
         <h2 className='font-heading text-2xl'>Game Session Logs</h2>
         <Button onClick={handleAddSesssion}>Add Session</Button>
       </div>
-
       {isLoading && <p>Fetching game sessions...</p>}
-
       {sessions?.length > 0 && !isLoading && (
         <div>
           {sessions.map((session: GameSession) => (
@@ -71,27 +107,43 @@ const GameSessions = (): JSX.Element => {
                 <div className='flex gap-4'>
                   <Pencil
                     className='h-[20px]'
-                    onClick={() => handleEdit(session)}
+                    onClick={() => handleSelectSession(session, 'update')}
                   />
-                  <Trash2 className='h-[20px]' />
+                  <Trash2
+                    className='h-[20px]'
+                    onClick={() => handleSelectSession(session, 'delete')}
+                  />
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
-
       {sessions?.length === 0 && !isLoading && (
         <p>No sessions yet. Start logging your sessions!</p>
       )}
 
-      <SessionModal
-        key={selectedSession?.id} // used the key trick here since to make sure the sessionData props sent here are always updated
-        open={open}
-        onClose={handleClose}
-        mode={mode.current}
-        sessionData={selectedSession}
-      />
+      {(mode.current === 'add' || mode.current === 'update') && (
+        <SessionModal
+          key={selectedSession?.id} // used the key trick here since to make sure the sessionData props sent here are always updated
+          open={open}
+          onClose={handleCloseSessionModal}
+          mode={mode.current}
+          sessionData={selectedSession}
+        />
+      )}
+
+      {mode.current === 'delete' && (
+        <ConfirmationModal
+          open={deleteConfirmOpen}
+          onCancel={handleConfirmationClose}
+          onClose={handleConfirmationClose}
+          title='Confirm Delete'
+          onConfirm={handleDeleteSession}
+        >
+          <p>This action is irreversible, are you sure?</p>
+        </ConfirmationModal>
+      )}
     </div>
   );
 };

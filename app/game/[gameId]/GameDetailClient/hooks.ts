@@ -11,6 +11,7 @@ import {
 import queryClient from '@/lib/api';
 import {
   addSession,
+  deleteSession,
   getGameSessions,
   updateSession,
 } from '@/lib/api/game-sessions';
@@ -182,6 +183,19 @@ export const useMutateUpdateSession = (gameId: string, userId: string) => {
     mutationFn: updateSession,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: gameSessionKey });
+    },
+  });
+};
+
+export const useMutateDeleteSession = (gameId: string, userId: string) => {
+  const gameSessionKey = ['game-sessions', gameId, userId];
+
+  return useMutation({
+    mutationFn: deleteSession,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: gameSessionKey,
+      });
     },
   });
 };
