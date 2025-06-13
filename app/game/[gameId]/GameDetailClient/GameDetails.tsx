@@ -1,6 +1,10 @@
 'use client';
 
+<<<<<<< Updated upstream
 import Image from 'next/image';
+=======
+import Link from 'next/link';
+>>>>>>> Stashed changes
 import { useParams } from 'next/navigation';
 import { JSX, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -85,6 +89,7 @@ const GameDetails = (): JSX.Element => {
   const onUserList = userGameData && !!userGameData;
 
   return (
+<<<<<<< Updated upstream
     <>
       {gameData && !isGameDataFetching && (
         <div className='pb-20'>
@@ -235,6 +240,32 @@ const GameDetails = (): JSX.Element => {
 
       <GameLogModal open={gameLogModalOpen} />
     </>
+=======
+    <div>
+      <Link className='text-stone-300 hover:text-stone-400' href='/library'>
+        ← Back to library
+      </Link>
+      <h1 className='font-heading mt-4 mb-5 text-3xl xl:text-5xl'>
+        {gameData?.name}
+      </h1>
+      <Tabs defaultValue='overview'>
+        <TabsList className='h-auto w-full justify-start gap-0.5 bg-transparent p-0'>
+          <TabsTrigger value='overview' className={tabsTriggerClassname}>
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value='sessions' className={tabsTriggerClassname}>
+            Game Sessions
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value='overview'>
+          <GameOverview />
+        </TabsContent>
+        <TabsContent value='sessions'>
+          <GameSessions />
+        </TabsContent>
+      </Tabs>
+    </div>
+>>>>>>> Stashed changes
   );
 };
 
