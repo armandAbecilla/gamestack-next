@@ -142,9 +142,21 @@ export const useGetGameSessions = (gameId: string, userId: string) => {
   });
 };
 
+//export const useMutateAddSession = (gameId: string, userId: string) => {
+// const gameSessionKey = ['game-sessions', gameId, userId];
+// return useOptimisticUpdating(gameSessionKey, addSession, {
+//    onSuccess: () => {
+//      queryClient.invalidateQueries({
+//        queryKey: gameSessionKey,
+//      });
+//    },
+//  });
+//};
+
 export const useMutateAddSession = (gameId: string, userId: string) => {
   const gameSessionKey = ['game-sessions', gameId, userId];
-  return useOptimisticUpdating(gameSessionKey, addSession, {
+  return useMutation({
+    mutationFn: addSession,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: gameSessionKey,
@@ -153,13 +165,23 @@ export const useMutateAddSession = (gameId: string, userId: string) => {
   });
 };
 
+//export const useMutateUpdateSession = (gameId: string, userId: string) => {
+//const gameSessionKey = ['game-sessions', gameId, userId];
+//return useOptimisticUpdating(gameSessionKey, updateSession, {
+//    onSuccess: () => {
+//      queryClient.invalidateQueries({
+//        queryKey: gameSessionKey,
+//      });
+//    },
+//  });
+//};
+
 export const useMutateUpdateSession = (gameId: string, userId: string) => {
   const gameSessionKey = ['game-sessions', gameId, userId];
-  return useOptimisticUpdating(gameSessionKey, updateSession, {
+  return useMutation({
+    mutationFn: updateSession,
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: gameSessionKey,
-      });
+      queryClient.invalidateQueries({ queryKey: gameSessionKey });
     },
   });
 };

@@ -23,7 +23,9 @@ const GameSessions = (): JSX.Element => {
 
   const [open, setOpen] = useState(false);
   const mode = useRef<'add' | 'update'>('add');
-  const [selectedSession, setSelectedSession] = useState<any>(undefined);
+  const [selectedSession, setSelectedSession] = useState<
+    GameSession | undefined
+  >(undefined);
 
   const handleAddSesssion = () => {
     mode.current = 'add';

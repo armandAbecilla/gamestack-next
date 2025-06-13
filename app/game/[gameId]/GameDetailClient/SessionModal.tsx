@@ -1,3 +1,4 @@
+import { parseDate } from '@internationalized/date';
 import { useParams } from 'next/navigation';
 import { JSX, useRef, useState } from 'react';
 import { DateValue } from 'react-aria-components';
@@ -12,7 +13,6 @@ import { RootState } from '@/lib/store/store';
 import { GameSession } from '@/models/types';
 
 import { useMutateAddSession, useMutateUpdateSession } from './hooks';
-import { parseDate } from '@internationalized/date';
 
 type SessionModalProps = {
   open: boolean;
